@@ -1,0 +1,62 @@
+# Created by https://www.toptal.com/developers/gitignore/api/swift,xcode
+
+### Swift ###
+.build/
+Packages/
+*.xcodeproj
+xcuserdata/
+*.xcworkspace
+*~
+.DS_Store
+.swiftpm
+
+# Swift Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+.package.resolved
+
+### Xcode ###
+## Build generated
+build/
+DerivedData/
+
+## Various settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+## Other
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# CocoaPods
+# Pods/
+
+# Carthage
+Carthage/Build
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/test_result.html
+
+# User-specific files
+*.xcuserdatad
+
+# Environment variables
+.env
