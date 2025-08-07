@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FACE63732E44E5E7004EF019 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FACE63722E44E5E7004EF019 /* FirebaseAuth */; };
+		FACE63752E44E5E7004EF019 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FACE63742E44E5E7004EF019 /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		FACE63472E43A40F004EF019 /* VideoGameDatabase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoGameDatabase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FACE63732E44E5E7004EF019 /* FirebaseAuth in Frameworks */,
+				FACE63752E44E5E7004EF019 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,8 @@
 			);
 			name = VideoGameDatabase;
 			packageProductDependencies = (
+				FACE63722E44E5E7004EF019 /* FirebaseAuth */,
+				FACE63742E44E5E7004EF019 /* FirebaseFirestore */,
 			);
 			productName = VideoGameDatabase;
 			productReference = FACE63472E43A40F004EF019 /* VideoGameDatabase.app */;
@@ -107,6 +116,9 @@
 			);
 			mainGroup = FACE633E2E43A40F004EF019;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				FACE63712E44E5E7004EF019 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FACE63482E43A40F004EF019 /* Products */;
 			projectDirPath = "";
@@ -337,6 +349,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FACE63712E44E5E7004EF019 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FACE63722E44E5E7004EF019 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FACE63712E44E5E7004EF019 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		FACE63742E44E5E7004EF019 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FACE63712E44E5E7004EF019 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FACE633F2E43A40F004EF019 /* Project object */;
 }
