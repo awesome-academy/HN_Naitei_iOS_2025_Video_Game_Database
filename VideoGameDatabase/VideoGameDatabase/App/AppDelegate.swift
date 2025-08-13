@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func configFirebase() {
-            FirebaseApp.configure()
-        }
+        FirebaseApp.configure()
+    }
 }
 
