@@ -18,3 +18,4 @@ struct Game: Codable {
     let metacritic: Int?
     let genres: [Genre]?
 }
+
