@@ -13,29 +13,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-            guard let windowScene = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+                
+                let window = UIWindow(windowScene: windowScene)
+                self.window = window
+                
+                setupRootViewController()
+                
+                window.makeKeyAndVisible()
+            }
             
-            let window = UIWindow(windowScene: windowScene)
-            self.window = window
-            
-            setupRootViewController()
-            
-            window.makeKeyAndVisible()
-        }
-        
-    private func setupRootViewController() {
-        if Auth.auth().currentUser != nil {
-            // signed in
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let mainTabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
-            window?.rootViewController = mainTabBarController
-        } else {
-            // not signed in
-            let authVC = AuthViewController()
-            let authNav = UINavigationController(rootViewController: authVC)
-            window?.rootViewController = authNav
-        }
-    }
+            private func setupRootViewController() {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                // Dùng AuthService để kiểm tra
+                if AuthService.shared.isUserLoggedIn() {
+                    let mainTabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
+                    window?.rootViewController = mainTabBarController
+                } else {
+                    // Khởi tạo AuthViewController từ Storyboard
+                    let authViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
+                    window?.rootViewController = authViewController
+                }
+            }
   
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
