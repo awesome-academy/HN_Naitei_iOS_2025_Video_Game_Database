@@ -31,9 +31,9 @@ final class NetworkingClient {
             return
         }
         
-        urlComponents.queryItems = [
-            URLQueryItem(name: "key", value: apiKey)
-        ]
+        var queryItems = urlComponents.queryItems ?? []
+        queryItems.append(URLQueryItem(name: "key", value: apiKey))
+        urlComponents.queryItems = queryItems
         
         guard let url = urlComponents.url else {
             completion(.failure(.invalidURL))
@@ -46,7 +46,7 @@ final class NetworkingClient {
                     completion(.failure(.requestFailed(error)))
                     return
                 }
-
+                
                 guard let httpResponse = response as? HTTPURLResponse else {
                     completion(.failure(.invalidData))
                     return
