@@ -113,6 +113,6 @@ extension HomeViewController: UISearchBarDelegate {
         guard let query = searchBar.text, !query.isEmpty else { return }
         
         tabBarController?.selectedIndex = 1
-        //TODO: thêm func search
+        // TODO: add search function
     }
 }
