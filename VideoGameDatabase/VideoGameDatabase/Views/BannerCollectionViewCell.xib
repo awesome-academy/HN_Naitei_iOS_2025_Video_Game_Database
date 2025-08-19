@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="BannerCollectionViewCell" id="gTV-IL-0wX" customClass="BannerCollectionViewCell" customModule="VideoGameDatabase" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="399" height="270"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="399" height="270"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EG7-DF-yoG">
+                        <rect key="frame" x="0.0" y="0.0" width="399" height="270"/>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="toc-xl-jay">
+                        <rect key="frame" x="0.0" y="220" width="399" height="50"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCd-aG-yfZ">
+                                <rect key="frame" x="8" y="8" width="383" height="34"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="GCd-aG-yfZ" firstAttribute="leading" secondItem="toc-xl-jay" secondAttribute="leading" constant="8" id="CX7-d7-ngv"/>
+                            <constraint firstAttribute="trailing" secondItem="GCd-aG-yfZ" secondAttribute="trailing" constant="8" id="LIw-oO-Np7"/>
+                            <constraint firstAttribute="height" constant="50" id="a5T-5I-CED"/>
+                            <constraint firstAttribute="bottom" secondItem="GCd-aG-yfZ" secondAttribute="bottom" constant="8" id="c4U-P2-IkA"/>
+                            <constraint firstItem="GCd-aG-yfZ" firstAttribute="top" secondItem="toc-xl-jay" secondAttribute="top" constant="8" id="unF-XV-Fvr"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="toc-xl-jay" firstAttribute="trailing" secondItem="EG7-DF-yoG" secondAttribute="trailing" id="5Kz-W6-ava"/>
+                <constraint firstAttribute="bottom" secondItem="EG7-DF-yoG" secondAttribute="bottom" id="End-Hc-z5T"/>
+                <constraint firstAttribute="trailing" secondItem="EG7-DF-yoG" secondAttribute="trailing" id="G76-Nf-HRd"/>
+                <constraint firstItem="toc-xl-jay" firstAttribute="leading" secondItem="EG7-DF-yoG" secondAttribute="leading" id="RWF-Et-3OA"/>
+                <constraint firstItem="EG7-DF-yoG" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Tra-Sm-BPE"/>
+                <constraint firstItem="EG7-DF-yoG" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="l8Z-Um-A6P"/>
+                <constraint firstItem="toc-xl-jay" firstAttribute="bottom" secondItem="EG7-DF-yoG" secondAttribute="bottom" id="oEv-LH-7Gb"/>
+            </constraints>
+            <size key="customSize" width="399" height="270"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="layer.shadowColor">
+                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                    <integer key="value" value="8"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                    <real key="value" value="0.29999999999999999"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                    <size key="value" width="0.0" height="4"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="bannerImageView" destination="EG7-DF-yoG" id="cBk-6I-0wV"/>
+                <outlet property="gradientView" destination="toc-xl-jay" id="WjB-wg-54C"/>
+                <outlet property="titleLabel" destination="GCd-aG-yfZ" id="f8w-HP-uaZ"/>
+            </connections>
+            <point key="canvasLocation" x="385.49618320610688" y="64.788732394366207"/>
+        </collectionViewCell>
+    </objects>
+</document>

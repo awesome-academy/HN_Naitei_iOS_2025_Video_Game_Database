@@ -25,7 +25,7 @@ final class GameCardView: UIView {
     }
     
     // MARK: - Public Methods
-
+    
     func configure(with game: Game) {
         gameNameLabel.text = game.name
         
@@ -58,3 +58,4 @@ final class GameCardView: UIView {
         layer.masksToBounds = true
     }
 }
+
