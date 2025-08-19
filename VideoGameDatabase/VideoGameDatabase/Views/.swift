@@ -26,7 +26,7 @@ final class BannerCollectionViewCell: UICollectionViewCell {
         bannerImageView.contentMode = .scaleAspectFill
         bannerImageView.clipsToBounds = true
 
-        // Gradient phủ từ trong suốt -> đen 80%
+        // Gradient from transparent to 80% black
         gradientLayer.colors = [UIColor.clear.cgColor,
                                 UIColor.black.withAlphaComponent(0.8).cgColor]
         gradientLayer.locations = [0.0, 1.0]
