@@ -1,41 +1,41 @@
 import UIKit
 
 final class GenreChipButton: UIButton {
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButton()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setupButton()
     }
-    
-    // MARK: - Public Methods
     
     func configure(with title: String) {
-        var newConfig = self.configuration ?? UIButton.Configuration.filled()
-        
-        var titleContainer = AttributeContainer()
-        titleContainer.font = .systemFont(ofSize: 14, weight: .medium)
-        
-        newConfig.attributedTitle = AttributedString(title, attributes: titleContainer)
-        
-        self.configuration = newConfig
+        var cfg = configuration ?? .filled()
+        var attrs = AttributeContainer()
+        attrs.font = .systemFont(ofSize: 14, weight: .medium)
+        cfg.attributedTitle = AttributedString(title, attributes: attrs)
+        configuration = cfg
     }
     
-    // MARK: - Private Methods
-    
     private func setupButton() {
-        var config = UIButton.Configuration.filled()
+        var cfg = UIButton.Configuration.filled()
+        cfg.cornerStyle = .capsule
+        cfg.contentInsets = .init(top: 8, leading: 16, bottom: 8, trailing: 16)
+        configuration = cfg
         
-        config.baseBackgroundColor = .systemGray5
-        config.baseForegroundColor = .label
-        
-        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
-        
-        config.cornerStyle = .capsule
-        
-        self.configuration = config
+        configurationUpdateHandler = { btn in
+            var c = btn.configuration ?? .filled()
+            if btn.isSelected {
+                c.baseBackgroundColor = .systemYellow
+                c.baseForegroundColor = .black
+            } else {
+                c.baseBackgroundColor = .systemGray5
+                c.baseForegroundColor = .label
+            }
+            btn.configuration = c
+        }
     }
 }

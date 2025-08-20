@@ -39,21 +39,9 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Setup
     private func setupUI() {
-        title = "Discover"
+        title = "Home"
         navigationController?.navigationBar.prefersLargeTitles = true
-        searchBar.searchBarStyle = .minimal
-        searchBar.barTintColor = .black
-        searchBar.searchTextField.backgroundColor = .black
-        searchBar.searchTextField.textColor = .white
-        
-        searchBar.searchTextField.layer.borderColor = UIColor.lightGray.cgColor
-        searchBar.searchTextField.layer.borderWidth = 1
-        searchBar.searchTextField.layer.cornerRadius = 8
-        
-        if let glassIconView = searchBar.searchTextField.leftView as? UIImageView {
-            glassIconView.image = glassIconView.image?.withRenderingMode(.alwaysTemplate)
-            glassIconView.tintColor = .lightGray
-        }
+        SearchBarStyler.applyDark(searchBar)
         
         if let clearButton = searchBar.searchTextField.value(forKey: "clearButton") as? UIButton {
             clearButton.setImage(clearButton.currentImage?.withRenderingMode(.alwaysTemplate), for: .normal)
@@ -109,10 +97,26 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        
         guard let query = searchBar.text, !query.isEmpty else { return }
         
-        tabBarController?.selectedIndex = 1
-        // TODO: add search function
+        guard let tab = tabBarController else { return }
+        tab.selectedIndex = 1
+        
+        if let nav = tab.viewControllers?[1] as? UINavigationController {
+            if let discover = (nav.topViewController as? DiscoverViewController)
+                ?? (nav.viewControllers.first as? DiscoverViewController) {
+                discover.handleExternalSearch(query)
+                return
+            }
+        } else if let discover = tab.viewControllers?[1] as? DiscoverViewController {
+            discover.handleExternalSearch(query)
+            return
+        }
+        
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: .didRequestDiscoverSearch,
+                                            object: nil,
+                                            userInfo: ["query": query])
+        }
     }
 }
