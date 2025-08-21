@@ -22,28 +22,16 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				Views/.swift,
 			);
 			target = FACE63462E43A40F004EF019 /* VideoGameDatabase */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		FA2552CD2E53325E005BDC49 /* Exceptions for "VideoGameDatabase" folder in "Compile Sources" phase from "VideoGameDatabase" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = FACE63432E43A40F004EF019 /* Sources */;
-			membershipExceptions = (
-				Views/.swift,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		FACE63492E43A40F004EF019 /* VideoGameDatabase */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				FACE63592E43A411004EF019 /* Exceptions for "VideoGameDatabase" folder in "VideoGameDatabase" target */,
-				FA2552CD2E53325E005BDC49 /* Exceptions for "VideoGameDatabase" folder in "Compile Sources" phase from "VideoGameDatabase" target */,
 			);
 			path = VideoGameDatabase;
 			sourceTree = "<group>";

@@ -8,7 +8,11 @@
 import Foundation
 
 struct GamesResponse: Codable {
+    let count: Int
+    let next: String?
+    let previous: String?
     let results: [Game]
+    
 }
 
 struct Game: Codable {
