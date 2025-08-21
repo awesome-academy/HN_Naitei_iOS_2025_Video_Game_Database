@@ -87,15 +87,15 @@ class DiscoverViewController: UIViewController {
         genresCollectionView.allowsMultipleSelection = true
         
         //  TODO: tab card -> Detail
-        [browseDS, resultsDS].forEach { ds in
-            ds.onSelect = { game in
+        [browseDS, resultsDS].forEach { dataSource in
+            dataSource.onGameSelected = { game in
                 // TODO: push GameDetailViewController
                 print("Selected game: \(game.name)")
             }
         }
         
-        chipsDS.onToggle = { [weak self] g, _ in
-            self?.viewModel.toggleGenre(slug: g.slug)
+        chipsDS.onToggle = { [weak self] genre, _ in
+            self?.viewModel.toggleGenre(slug: genre.slug)
         }
     }
     
@@ -161,9 +161,9 @@ class DiscoverViewController: UIViewController {
     
     // MARK: - Notifications
     @objc private func handleIncomingSearch(_ note: Notification) {
-        if let q = note.userInfo?["query"] as? String {
-            searchBar.text = q
-            switchToResultsMode(query: q)
+        if let query = note.userInfo?["query"] as? String {
+            searchBar.text = query
+            switchToResultsMode(query: query)
         }
     }
     
@@ -188,8 +188,8 @@ class DiscoverViewController: UIViewController {
 extension DiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        guard let q = searchBar.text, !q.isEmpty else { return }
-        switchToResultsMode(query: q)
+        guard let query = searchBar.text, !query.isEmpty else { return }
+        switchToResultsMode(query: query)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

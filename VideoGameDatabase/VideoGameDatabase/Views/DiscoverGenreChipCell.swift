@@ -13,7 +13,7 @@ class DiscoverGenreChipCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        chipButton.isUserInteractionEnabled = false   
+        chipButton.isUserInteractionEnabled = false
         isSelected = false
     }
     
@@ -24,9 +24,9 @@ class DiscoverGenreChipCell: UICollectionViewCell {
         }
     }
     
-    func configure(title: String, selected: Bool) {
+    func configure(title: String, isSelected: Bool) {
         chipButton.configure(with: title)
-        chipButton.isSelected = selected
+        chipButton.isSelected = isSelected
         chipButton.setNeedsUpdateConfiguration()
     }
 }

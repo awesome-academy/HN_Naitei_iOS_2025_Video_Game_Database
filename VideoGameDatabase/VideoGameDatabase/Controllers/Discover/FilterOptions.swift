@@ -1,15 +1,13 @@
-//
-//  FilterOptions.swift
-//  VideoGameDatabase
-//
-//  Created by macbook on 20/8/25.
-//
-
 import Foundation
 
 struct FilterOptions: Equatable {
     enum Platform: Int {
-        case all = 0, pc, playstation, xbox, nintendoSwitch
+        case all = 0
+        case pc
+        case playstation
+        case xbox
+        case nintendoSwitch
+        
         var ids: [Int]? {
             switch self {
             case .all: return nil
@@ -20,8 +18,20 @@ struct FilterOptions: Equatable {
             }
         }
     }
-    enum DateRange: Int { case any = 0, thisYear, last90d, upcoming }
-    enum Sort: Int { case relevance = 0, newest, rating, metacritic }
+    
+    enum DateRange: Int {
+        case any = 0
+        case thisYear
+        case last90d
+        case upcoming
+    }
+    
+    enum Sort: Int {
+        case relevance = 0
+        case newest
+        case rating
+        case metacritic
+    }
     
     var platform: Platform = .all
     var dateRange: DateRange = .any
@@ -33,22 +43,18 @@ struct FilterOptions: Equatable {
 
 extension FilterOptions {
     func datesParamString(today: Date = Date()) -> String? {
-        let cal = Calendar.current
-        let fmt = DateFormatter()
-        fmt.dateFormat = "yyyy-MM-dd"
-        
         switch dateRange {
         case .any:
             return nil
         case .thisYear:
-            let start = cal.date(from: cal.dateComponents([.year], from: today)) ?? today
-            return "\(fmt.string(from: start)),\(fmt.string(from: today))"
+            let start = today.startOfYear()
+            return "\(start.ymdString()),\(today.ymdString())"
         case .last90d:
-            let start = cal.date(byAdding: .day, value: -90, to: today) ?? today
-            return "\(fmt.string(from: start)),\(fmt.string(from: today))"
+            let start = today.addingDays(-90)
+            return "\(start.ymdString()),\(today.ymdString())"
         case .upcoming:
-            let end = cal.date(byAdding: .day, value: 120, to: today) ?? today
-            return "\(fmt.string(from: today)),\(fmt.string(from: end))"
+            let end = today.addingDays(120)
+            return "\(today.ymdString()),\(end.ymdString())"
         }
     }
     
@@ -61,9 +67,12 @@ extension FilterOptions {
         switch sort {
         case .relevance:
             return forSearch ? nil : "-added"
-        case .newest:     return "-released"
-        case .rating:     return "-rating"
-        case .metacritic: return "-metacritic"
+        case .newest:
+            return "-released"
+        case .rating:
+            return "-rating"
+        case .metacritic:
+            return "-metacritic"
         }
     }
     
