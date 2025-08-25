@@ -19,7 +19,7 @@ class NibView: UIView {
         nib.instantiate(withOwner: self, options: nil)
         
         guard let contentView = contentView else {
-            assertionFailure("⚠️ Kéo nối `contentView` của \(nibName) vào root view trong xib.")
+            assertionFailure("Connect `contentView` from File’s Owner to the root view in \(nibName).xib.")
             return
         }
         contentView.frame = bounds
