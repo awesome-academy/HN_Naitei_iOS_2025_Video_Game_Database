@@ -1,12 +1,3 @@
-//
-//  FavoriteService.swift
-//  VideoGameDatabase
-//
-//  Created by macbook on 25/8/25.
-//
-
-
-// Services/FavoriteService.swift
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
