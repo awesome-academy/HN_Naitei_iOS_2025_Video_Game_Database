@@ -9,6 +9,7 @@ import UIKit
 final class NewLaunchesDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var games: [Game] = []
+    var onGameSelected: ((Game) -> Void)?
     
     // MARK: - UICollectionViewDataSource
     
@@ -48,5 +49,8 @@ final class NewLaunchesDataSource: NSObject, UICollectionViewDataSource, UIColle
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 12
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        onGameSelected?(games[indexPath.item])
     }
 }

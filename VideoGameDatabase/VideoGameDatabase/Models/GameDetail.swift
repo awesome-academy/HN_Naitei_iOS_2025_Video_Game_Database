@@ -1,11 +1,14 @@
-//
-//  GameDetail.swift
-//  VideoGameDatabase
-//
-//  Created by macbook on 12/8/25.
-//
-
 import Foundation
+
+struct Tag: Codable {
+    let id: Int
+    let name: String
+    let slug: String?
+}
+
+struct ESRBRating: Codable {
+    let name: String
+}
 
 struct GameDetail: Codable {
     let id: Int
@@ -21,4 +24,6 @@ struct GameDetail: Codable {
     let publishers: [GamePublisher]?
     let genres: [Genre]?
     let stores: [StoreItemModel]?
+    let esrbRating: ESRBRating?
+    let tags: [Tag]?
 }

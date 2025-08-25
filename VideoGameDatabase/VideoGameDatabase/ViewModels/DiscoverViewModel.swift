@@ -16,6 +16,8 @@ protocol DiscoverViewModelProtocol {
     func search(_ q: String)
     func apply(_ f: FilterOptions)
     func clearFilters()
+    func selectGenre(by slug: String)
+    
 }
 
 final class DiscoverViewModel: DiscoverViewModelProtocol {
@@ -75,5 +77,9 @@ final class DiscoverViewModel: DiscoverViewModelProtocol {
         service.fetchBrowse(genres: selectedSlugs, filters: currentFilters, pageSize: 20) { [weak self] r in
             if case .success(let games) = r { self?.browseGames = games; self?.onUpdateBrowse?() }
         }
+    }
+    func selectGenre(by slug: String) {
+        selectedSlugs = [slug]
+        fetchBrowse()
     }
 }

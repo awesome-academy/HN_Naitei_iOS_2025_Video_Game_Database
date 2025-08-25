@@ -1,13 +1,13 @@
-//
-//  Platform.swift
-//  VideoGameDatabase
-//
-//  Created by macbook on 12/8/25.
-//
 import Foundation
 
 struct PlatformItem: Codable {
-    let platform: Platform
+    let platform: PlatformRef?
+    let name: String?
+
+    struct PlatformRef: Codable {
+        let id: Int?
+        let name: String
+    }
 }
 
 struct Platform: Codable {

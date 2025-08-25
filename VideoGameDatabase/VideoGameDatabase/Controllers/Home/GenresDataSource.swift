@@ -9,6 +9,7 @@ import UIKit
 final class GenresDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var genres: [Genre] = []
+    var onGenreSelected: ((Genre) -> Void)?
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return genres.count
@@ -31,4 +32,8 @@ final class GenresDataSource: NSObject, UICollectionViewDataSource, UICollection
         let width = (collectionView.bounds.width - totalSpacing) / itemsPerRow
         return CGSize(width: width, height: 70)
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            let selectedGenre = genres[indexPath.item]
+            onGenreSelected?(selectedGenre)
+        }
 }

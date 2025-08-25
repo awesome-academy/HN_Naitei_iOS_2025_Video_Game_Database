@@ -3,6 +3,7 @@ import UIKit
 final class TrendingDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var games: [Game] = []
+    var onGameSelected: ((Game) -> Void)?
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return games.count
@@ -21,5 +22,9 @@ final class TrendingDataSource: NSObject, UICollectionViewDataSource, UICollecti
         let width = availableWidth / 2
         let height = width * 1.2
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        onGameSelected?(games[indexPath.item])
     }
 }
