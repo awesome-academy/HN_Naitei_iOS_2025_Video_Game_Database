@@ -35,7 +35,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="buH-HX-NF1">
                             <rect key="frame" x="0.0" y="41.666666666666686" width="393" height="624.33333333333326"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AS3-Q4-3D8" customClass="MetacriticTagView" customModule="VideoGameDatabase" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AS3-Q4-3D8">
                                     <rect key="frame" x="8" y="8" width="269" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>

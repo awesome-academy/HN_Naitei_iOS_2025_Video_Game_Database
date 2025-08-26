@@ -26,12 +26,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             private func setupRootViewController() {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 
-                // Dùng AuthService để kiểm tra
                 if AuthService.shared.isUserLoggedIn() {
                     let mainTabBarController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
                     window?.rootViewController = mainTabBarController
                 } else {
-                    // Khởi tạo AuthViewController từ Storyboard
                     let authViewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
                     window?.rootViewController = authViewController
                 }
