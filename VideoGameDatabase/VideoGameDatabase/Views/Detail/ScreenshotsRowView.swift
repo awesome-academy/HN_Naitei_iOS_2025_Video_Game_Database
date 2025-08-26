@@ -21,7 +21,8 @@ final class ScreenshotsRowView: NibView, UICollectionViewDataSource, UICollectio
             flow.minimumLineSpacing = 12
             flow.sectionInset = .init(top: 0, left: 16, bottom: 0, right: 16)
         }
-        collectionView.dataSource = self; collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.delegate = self
     }
     
     func configure(urls: [URL]) {
