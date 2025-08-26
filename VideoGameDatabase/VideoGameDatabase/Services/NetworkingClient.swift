@@ -25,51 +25,30 @@ final class NetworkingClient {
     // MARK: - Public Methods
     
     func fetch<T: Codable>(endpoint: String, completion: @escaping (Result<T, APIError>) -> Void) {
-        
         guard var urlComponents = URLComponents(string: "\(baseURL)\(endpoint)") else {
-            completion(.failure(.invalidURL))
-            return
+            return completion(.failure(.invalidURL))
         }
-        
         var queryItems = urlComponents.queryItems ?? []
         queryItems.append(URLQueryItem(name: "key", value: apiKey))
         urlComponents.queryItems = queryItems
         
-        guard let url = urlComponents.url else {
-            completion(.failure(.invalidURL))
-            return
-        }
+        guard let url = urlComponents.url else { return completion(.failure(.invalidURL)) }
         
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    completion(.failure(.requestFailed(error)))
-                    return
-                }
-                
-                guard let httpResponse = response as? HTTPURLResponse else {
-                    completion(.failure(.invalidData))
-                    return
-                }
-                
-                guard (200...299).contains(httpResponse.statusCode) else {
-                    completion(.failure(.serverError(statusCode: httpResponse.statusCode)))
-                    return
-                }
-                
-                guard let data = data else {
-                    completion(.failure(.invalidData))
-                    return
-                }
-                
-                do {
-                    let decodedObject = try self.decoder.decode(T.self, from: data)
-                    completion(.success(decodedObject))
-                } catch {
-                    completion(.failure(.decodingError(error)))
-                }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                return DispatchQueue.main.async { completion(.failure(.requestFailed(error))) }
             }
-        }
-        task.resume()
+            guard let http = response as? HTTPURLResponse,
+                  (200...299).contains(http.statusCode),
+                  let data = data else {
+                return DispatchQueue.main.async { completion(.failure(.invalidData)) }
+            }
+            do {
+                let decoded = try self.decoder.decode(T.self, from: data)
+                DispatchQueue.main.async { completion(.success(decoded)) }
+            } catch {
+                DispatchQueue.main.async { completion(.failure(.decodingError(error))) }
+            }
+        }.resume()
     }
 }

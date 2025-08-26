@@ -60,7 +60,23 @@ final class HomeViewController: UIViewController {
         
         trendingCollectionView.dataSource = trendingDataSource
         trendingCollectionView.delegate = trendingDataSource
+        
+        newLaunchesDataSource.onGameSelected = { [weak self] game in
+            self?.openGameDetail(with: game.id)
+        }
+        trendingDataSource.onGameSelected = { [weak self] game in
+            self?.openGameDetail(with: game.id)
+        }
+        genresDataSource.onGenreSelected = { [weak self] genre in
+            self?.navigateToDiscover(with: genre)
+        }
     }
+    
+    private func openGameDetail(with id: Int) {
+        let controller = DetailHostViewController.instantiate(gameId: id)
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
     
     private func registerCells() {
         newLaunchesCollectionView.register(UINib(nibName: BannerCollectionViewCell.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: BannerCollectionViewCell.reuseIdentifier)
@@ -90,6 +106,14 @@ final class HomeViewController: UIViewController {
         genresCollectionViewHeightConstraint.constant = genresCollectionView.collectionViewLayout.collectionViewContentSize.height
         trendingCollectionViewHeightConstraint.constant = trendingCollectionView.collectionViewLayout.collectionViewContentSize.height
         view.layoutIfNeeded()
+    }
+    private func navigateToDiscover(with genre: Genre) {
+        tabBarController?.selectedIndex = 1
+        NotificationCenter.default.post(
+            name: .didSelectGenreOnHome,
+            object: nil,
+            userInfo: ["genreSlug": genre.slug]
+        )
     }
 }
 

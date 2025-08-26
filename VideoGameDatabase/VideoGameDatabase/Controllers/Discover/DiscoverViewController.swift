@@ -29,11 +29,13 @@ class DiscoverViewController: UIViewController {
         hookNotifications()
         bindViewModel()
         viewModel.loadInitial()
+        setupNotificationObserver()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
     
     // MARK: - Setup
     private func setupUI() {
@@ -88,15 +90,19 @@ class DiscoverViewController: UIViewController {
         
         //  TODO: tab card -> Detail
         [browseDS, resultsDS].forEach { dataSource in
-            dataSource.onGameSelected = { game in
-                // TODO: push GameDetailViewController
-                print("Selected game: \(game.name)")
+            dataSource.onGameSelected = { [weak self] game in
+                self?.openGameDetail(with: game.id)
             }
         }
         
         chipsDS.onToggle = { [weak self] genre, _ in
             self?.viewModel.toggleGenre(slug: genre.slug)
         }
+    }
+    
+    private func openGameDetail(with id: Int) {
+        let controller = DetailHostViewController.instantiate(gameId: id)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     private func hookNotifications() {
@@ -149,6 +155,21 @@ class DiscoverViewController: UIViewController {
         emptyLabel.isHidden = true
         searchBar.showsCancelButton = false
         searchBar.text = nil
+    }
+    private func setupNotificationObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleGenreSelectionFromHome(_:)),
+            name: .didSelectGenreOnHome,
+            object: nil
+        )
+    }
+    
+    @objc private func handleGenreSelectionFromHome(_ notification: Notification) {
+        guard let slug = notification.userInfo?["genreSlug"] as? String else { return }
+        switchToBrowseMode()
+        
+        viewModel.selectGenre(by: slug)
     }
     // MARK: - Actions
     @IBAction private func filterButtonTapped(_ sender: UIButton) {
