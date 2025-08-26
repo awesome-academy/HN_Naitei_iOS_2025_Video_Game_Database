@@ -33,7 +33,10 @@ final class MetacriticTagView: UIView {
     }
 
     func configure(with score: Int?) {
-        guard let score, score > 0 else { isHidden = true; return }
+        guard let score, score > 0 else {
+            isHidden = true
+            return
+        }
         isHidden = false
         scoreLabel.text = String(score)
         backgroundColor = score >= 75 ? .systemGreen : (score >= 50 ? .systemOrange : .systemRed)
