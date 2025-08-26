@@ -24,7 +24,11 @@ final class ScreenshotsRowView: NibView, UICollectionViewDataSource, UICollectio
         collectionView.dataSource = self; collectionView.delegate = self
     }
     
-    func configure(urls: [URL]) { items = urls; isHidden = items.isEmpty; collectionView.reloadData() }
+    func configure(urls: [URL]) {
+        items = urls
+        isHidden = items.isEmpty
+        collectionView.reloadData()
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { items.count }
     
