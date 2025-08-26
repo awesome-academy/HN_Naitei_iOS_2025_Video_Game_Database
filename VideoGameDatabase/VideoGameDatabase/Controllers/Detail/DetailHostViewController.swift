@@ -100,9 +100,6 @@ final class DetailHostViewController: UIViewController {
         titleView.configure(title: detail.name,
                             metaScore: detail.metacritic,
                             releaseDate: detail.releaseDateFormatted)
-        titleView.configure(title: detail.name,
-                            metaScore: detail.metacritic,
-                            releaseDate: detail.releaseDateFormatted)
         
         aboutView.configure(text: detail.descriptionRaw)
         
