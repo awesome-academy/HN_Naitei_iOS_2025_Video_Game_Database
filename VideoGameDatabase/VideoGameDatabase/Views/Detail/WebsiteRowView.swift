@@ -18,7 +18,10 @@ final class WebsiteRowView: NibView {
     }
     
     func configure(url: URL?) {
-        guard let url else { isHidden = true; return }
+        guard let url else {
+            isHidden = true
+            return
+        }
         let text = url.absoluteString
         let att = NSAttributedString(string: text,
                                      attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue,
