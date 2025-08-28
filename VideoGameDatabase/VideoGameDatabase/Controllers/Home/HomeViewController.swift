@@ -123,17 +123,16 @@ extension HomeViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         guard let query = searchBar.text, !query.isEmpty else { return }
         
-        guard let tab = tabBarController else { return }
-        tab.selectedIndex = 1
-        
-        if let nav = tab.viewControllers?[1] as? UINavigationController {
-            if let discover = (nav.topViewController as? DiscoverViewController)
-                ?? (nav.viewControllers.first as? DiscoverViewController) {
-                discover.handleExternalSearch(query)
+        guard let tabBarControllerRef = tabBarController else { return }
+        tabBarControllerRef.selectedIndex = 1
+        if let navigationControllerRef = tabBarControllerRef.viewControllers?[1] as? UINavigationController {
+            if let discoverViewController = (navigationControllerRef.topViewController as? DiscoverViewController)
+                ?? (navigationControllerRef.viewControllers.first as? DiscoverViewController) {
+                discoverViewController.handleExternalSearch(query)
                 return
             }
-        } else if let discover = tab.viewControllers?[1] as? DiscoverViewController {
-            discover.handleExternalSearch(query)
+        } else if let discoverViewController = tabBarControllerRef.viewControllers?[1] as? DiscoverViewController {
+            discoverViewController.handleExternalSearch(query)
             return
         }
         
