@@ -67,6 +67,7 @@ final class DetailHostViewController: UIViewController {
         favoriteButton.tintColor = iconColor
     }
     
+    
     private func rollbackFavorite(_ message: String) {
         DispatchQueue.main.async {
             self.isFavorite.toggle()
