@@ -67,26 +67,34 @@ final class DetailHostViewController: UIViewController {
         favoriteButton.tintColor = iconColor
     }
     
+    
+    private func rollbackFavorite(_ message: String) {
+        DispatchQueue.main.async {
+            self.isFavorite.toggle()
+            self.updateFavoriteButtonAppearance()
+            self.showAlert(title: "Error", message: message)
+        }
+    }
+    
     @objc private func didTapFavoriteButton() {
         isFavorite.toggle()
         updateFavoriteButtonAppearance()
         
         if isFavorite {
-            FavoriteService.shared.addToFavorites(gameId: gameIdentifier) { [weak self] error in
+            let minimal = Game(id: gameIdentifier,
+                               name: viewModel.detail?.name ?? "",
+                               backgroundImage: viewModel.detail?.backgroundImage,
+                               metacritic: viewModel.detail?.metacritic,
+                               genres: nil)
+            FavoriteService.shared.addToFavorites(game: minimal) { [weak self] error in
                 if error != nil {
-                    print("Error adding to favorites: \(error!.localizedDescription)")
-                    self?.isFavorite = false
-                    self?.updateFavoriteButtonAppearance()
-                    self?.showAlert(title: "Error", message: "Could not add to favorites.")
+                    self?.rollbackFavorite("Could not add to favorites.")
                 }
             }
         } else {
             FavoriteService.shared.removeFromFavorites(gameId: gameIdentifier) { [weak self] error in
                 if error != nil {
-                    print("Error removing from favorites: \(error!.localizedDescription)")
-                    self?.isFavorite = true
-                    self?.updateFavoriteButtonAppearance()
-                    self?.showAlert(title: "Error", message: "Could not remove from favorites.")
+                    self?.rollbackFavorite("Could not remove from favorites.")
                 }
             }
         }
@@ -100,9 +108,9 @@ final class DetailHostViewController: UIViewController {
         titleView.configure(title: detail.name,
                             metaScore: detail.metacritic,
                             releaseDate: detail.releaseDateFormatted)
-        
+        titleView.isHidden = false
         aboutView.configure(text: detail.descriptionRaw)
-        
+        aboutView.isHidden = false
         let rows: [InfoGridView.Row] = [
             .init(key: "Platforms",    value: detail.platformsText),
             .init(key: "Genres",       value: detail.genresText),
