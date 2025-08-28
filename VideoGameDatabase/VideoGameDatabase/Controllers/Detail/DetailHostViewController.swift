@@ -66,12 +66,15 @@ final class DetailHostViewController: UIViewController {
         favoriteButton.image = UIImage(systemName: iconName)
         favoriteButton.tintColor = iconColor
     }
+    
     private func rollbackFavorite(_ message: String) {
-        self.isFavorite.toggle()
-        self.updateFavoriteButtonAppearance()
-        self.showAlert(title: "Error", message: message)
+        DispatchQueue.main.async {
+            self.isFavorite.toggle()
+            self.updateFavoriteButtonAppearance()
+            self.showAlert(title: "Error", message: message)
+        }
     }
-
+    
     @objc private func didTapFavoriteButton() {
         isFavorite.toggle()
         updateFavoriteButtonAppearance()
@@ -83,11 +86,15 @@ final class DetailHostViewController: UIViewController {
                                metacritic: viewModel.detail?.metacritic,
                                genres: nil)
             FavoriteService.shared.addToFavorites(game: minimal) { [weak self] error in
-                if error != nil { self?.rollbackFavorite("Could not add to favorites.") }
+                if error != nil {
+                    self?.rollbackFavorite("Could not add to favorites.")
+                }
             }
         } else {
             FavoriteService.shared.removeFromFavorites(gameId: gameIdentifier) { [weak self] error in
-                if error != nil { self?.rollbackFavorite("Could not remove from favorites.") }
+                if error != nil {
+                    self?.rollbackFavorite("Could not remove from favorites.")
+                }
             }
         }
     }

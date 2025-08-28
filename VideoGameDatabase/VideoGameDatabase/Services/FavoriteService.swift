@@ -1,7 +1,8 @@
 import Foundation
 
 final class FavoriteService {
-    static let shared = FavoriteService(); private init() {}
+    static let shared = FavoriteService();
+    private init() {}
     
     private let store: FavoritesStore = CoreDataFavoritesStore.shared
     
@@ -22,5 +23,7 @@ final class FavoriteService {
         store.removeFromFavorites(gameId: gameId, completion: completion)
     }
     
-    func allFavorites() -> [Game] { store.fetchAll() }
+    func allFavorites() -> [Game] {
+        store.fetchAll()
+    }
 }
