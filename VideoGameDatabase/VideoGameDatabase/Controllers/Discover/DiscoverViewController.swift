@@ -21,6 +21,8 @@ class DiscoverViewController: UIViewController {
     private let chipsDS   = DiscoverChipsDataSource()
     private let browseDS  = GameGridDataSource()
     private let resultsDS = GameGridDataSource()
+    private let searchDebouncer = Debouncer(delay: 2.0)
+    private let minQueryLength = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,10 @@ class DiscoverViewController: UIViewController {
         bindViewModel()
         viewModel.loadInitial()
         setupNotificationObserver()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchDebouncer.cancel()
     }
     
     deinit {
@@ -183,6 +189,7 @@ class DiscoverViewController: UIViewController {
     // MARK: - Notifications
     @objc private func handleIncomingSearch(_ note: Notification) {
         if let query = note.userInfo?["query"] as? String {
+            searchDebouncer.cancel()
             searchBar.text = query
             switchToResultsMode(query: query)
         }
@@ -200,7 +207,15 @@ class DiscoverViewController: UIViewController {
     }
     func handleExternalSearch(_ query: String) {
         loadViewIfNeeded()
+        searchDebouncer.cancel()
         searchBar.text = query
+        switchToResultsMode(query: query)
+    }
+    private func performDebouncedSearch(query: String) {
+        guard searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) == query
+        else {
+            return
+        }
         switchToResultsMode(query: query)
     }
 }
@@ -209,12 +224,40 @@ class DiscoverViewController: UIViewController {
 extension DiscoverViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        guard let query = searchBar.text, !query.isEmpty else { return }
+        guard let query = searchBar.text, !query.isEmpty
+        else {
+            return
+        }
+        searchDebouncer.cancel()
         switchToResultsMode(query: query)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchDebouncer.cancel()
         searchBar.resignFirstResponder()
         switchToBrowseMode()
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if query.isEmpty {
+            searchDebouncer.cancel()
+            switchToBrowseMode()
+            return
+        }
+        
+        if query.count < minQueryLength {
+            searchDebouncer.cancel()
+            searchBar.showsCancelButton = true
+            return
+        }
+        
+        searchBar.showsCancelButton = true
+        resultsHeaderLabel.isHidden = false
+        resultsHeaderLabel.text = "Typing…"
+        
+        searchDebouncer.schedule { [weak self] in
+            self?.performDebouncedSearch(query: query)
+        }
     }
 }
