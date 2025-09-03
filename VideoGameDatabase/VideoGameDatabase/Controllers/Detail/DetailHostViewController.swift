@@ -1,4 +1,5 @@
 import UIKit
+import SafariServices
 
 final class DetailHostViewController: UIViewController {
     
@@ -17,6 +18,8 @@ final class DetailHostViewController: UIViewController {
     private var viewModel: GameDetailViewModelProtocol = GameDetailViewModel()
     private var favoriteButton: UIBarButtonItem!
     private var isFavorite: Bool = false
+    private var trailerView: TrailerPlayerView?
+    private var fullTrailerURL: URL?
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -25,16 +28,26 @@ final class DetailHostViewController: UIViewController {
         setupUI()
         bindViewModel()
         viewModel.loadData(for: gameIdentifier)
+        setupTrailerIfNeeded()
+        loadTrailer()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        trailerView?.stop()
     }
     
     // MARK: - Setup
     private func setupNavigationBar() {
-        favoriteButton = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .plain, target: self, action: #selector(didTapFavoriteButton))
+        favoriteButton = UIBarButtonItem(image: UIImage(systemName: "heart"),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(didTapFavoriteButton))
         navigationItem.rightBarButtonItem = favoriteButton
         
         checkFavoriteStatus()
     }
-    // MARK: - Setup
+    
     private func setupUI() {
         title = "Detail"
         view.backgroundColor = UIColor(red: 24/255, green: 24/255, blue: 24/255, alpha: 1.0)
@@ -121,16 +134,53 @@ final class DetailHostViewController: UIViewController {
         ]
         infoView.configure(rows)
         
-        if let websiteString = detail.website, !websiteString.isEmpty, let url = URL(string: websiteString) {
+        if let websiteString = detail.website,
+           !websiteString.isEmpty,
+           let websiteURL = URL(string: websiteString) {
             websiteView.isHidden = false
-            websiteView.configure(url: url)
+            websiteView.configure(url: websiteURL)
         }
         
         screenshotsView.configure(urls: viewModel.screenshotURLs)
         
         storesView.configure(with: viewModel.storeLinks)
     }
+    
+    private func setupTrailerIfNeeded() {
+        guard trailerView == nil else { return }
+        let trailerPlayerView = TrailerPlayerView(frame: .zero)
+        trailerPlayerView.translatesAutoresizingMaskIntoConstraints = false
+        heroView.addSubview(trailerPlayerView)
+        NSLayoutConstraint.activate([
+            trailerPlayerView.leadingAnchor.constraint(equalTo: heroView.leadingAnchor),
+            trailerPlayerView.trailingAnchor.constraint(equalTo: heroView.trailingAnchor),
+            trailerPlayerView.topAnchor.constraint(equalTo: heroView.topAnchor),
+            trailerPlayerView.bottomAnchor.constraint(equalTo: heroView.bottomAnchor),
+        ])
+        trailerPlayerView.onTapPlayFull = { [weak self] in
+            guard let self, let trailerURL = self.fullTrailerURL else { return }
+            self.present(SFSafariViewController(url: trailerURL), animated: true)
+        }
+        trailerView = trailerPlayerView
+    }
+    
+    private func loadTrailer() {
+        RAWGTrailersAPI.fetchStreamURL(gameId: gameIdentifier) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case .success(let streamURL):
+                    self.fullTrailerURL = streamURL
+                    self.trailerView?.isHidden = false
+                    self.trailerView?.configure(url: streamURL, autoplay: true, muted: true, previewSeconds: 20)
+                case .failure:
+                    self.trailerView?.isHidden = true
+                }
+            }
+        }
+    }
 }
+
 extension DetailHostViewController {
     static func instantiate(gameId: Int, in storyboardName: String = "Main") -> DetailHostViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)

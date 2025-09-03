@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TrailerPlayerView" customModule="VideoGameDatabase" customModuleProvider="target">
+            <connections>
+                <outlet property="activity" destination="8QD-UR-Dmg" id="9dr-pq-D0V"/>
+                <outlet property="muteButton" destination="V2L-ES-eLc" id="oEQ-Bf-XCO"/>
+                <outlet property="playFullButton" destination="AxL-Yt-aA1" id="BvZ-2w-6l2"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="8QD-UR-Dmg">
+                    <rect key="frame" x="186" y="416" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V2L-ES-eLc">
+                    <rect key="frame" x="333" y="728" width="60" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="UGh-s8-Asd"/>
+                        <constraint firstAttribute="height" constant="32" id="ody-4O-otm"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain"/>
+                    <connections>
+                        <action selector="tapMute:" destination="-1" eventType="touchUpInside" id="gWM-dh-der"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AxL-Yt-aA1">
+                    <rect key="frame" x="0.0" y="724" width="148.66666666666666" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="DHg-Rz-pWB"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="pgD-pn-Fgn"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" title="Play full trailer ▶︎"/>
+                    <connections>
+                        <action selector="tapPlayFull:" destination="-1" eventType="touchUpInside" id="klB-6j-I1Z"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="V2L-ES-eLc" secondAttribute="trailing" id="6ZP-vi-hmN"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="V2L-ES-eLc" secondAttribute="bottom" constant="24" id="CDg-Qv-UgW"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="AxL-Yt-aA1" secondAttribute="bottom" constant="24" id="oZO-E2-JTy"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="AxL-Yt-aA1" secondAttribute="leading" id="xx0-5V-YFS"/>
+            </constraints>
+            <point key="canvasLocation" x="-124" y="-12"/>
+        </view>
+    </objects>
+</document>
