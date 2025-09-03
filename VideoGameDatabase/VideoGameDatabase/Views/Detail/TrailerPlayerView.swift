@@ -10,7 +10,12 @@ final class TrailerPlayerView: UIView {
     var maxPreviewSeconds: Double = 20
     
     override class var layerClass: AnyClass { AVPlayerLayer.self }
-    private var playerLayer: AVPlayerLayer { layer as! AVPlayerLayer }
+    private var playerLayer: AVPlayerLayer {
+        guard let layer = self.layer as? AVPlayerLayer else {
+            preconditionFailure("TrailerPlayerView must use AVPlayerLayer as its backing layer")
+        }
+        return layer
+    }
     
     private var avPlayer: AVPlayer?
     private var currentPlayerItem: AVPlayerItem?

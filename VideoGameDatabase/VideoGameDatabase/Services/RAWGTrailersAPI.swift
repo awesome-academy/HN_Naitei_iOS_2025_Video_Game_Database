@@ -2,29 +2,6 @@ import Foundation
 
 private let RAWG_API_KEY = "32f88c2bfb2c4abab74d0914c61b78e7"
 
-private struct TrailersResponse: Decodable {
-    struct Movie: Decodable {
-        struct DataField: Decodable {
-            let max: String?
-            let _480: String?
-            enum CodingKeys: String, CodingKey {
-                case max
-                case _480 = "480"
-            }
-        }
-        let data: DataField
-    }
-    let results: [Movie]
-}
-
-private struct GameDetailClipResponse: Decodable {
-    struct Clip: Decodable {
-        let clip: String?
-        let clips: [String: String]?
-    }
-    let clip: Clip?
-}
-
 enum RAWGTrailersAPI {
     static func fetchStreamURL(gameId: Int, completion: @escaping (Result<URL, Error>) -> Void) {
         fetchFromMovies(gameId: gameId) { result in
@@ -44,7 +21,7 @@ enum RAWGTrailersAPI {
         URLSession.shared.dataTask(with: requestURL) { data, _, error in
             if let error = error { return completion(.failure(error)) }
             do {
-                let response = try JSONDecoder().decode(TrailersResponse.self, from: data ?? Data())
+                let response = try JSONDecoder().decode(TrailerMoviesResponse.self, from: data ?? Data())
                 for movie in response.results {
                     let candidateString = movie.data.max ?? movie.data._480
                     if let normalizedURL = normalize(urlString: candidateString),
